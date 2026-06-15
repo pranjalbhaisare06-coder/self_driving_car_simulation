@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutonomDrive — Self-Driving Car Simulation</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#e6edf3;font-family:monospace;font-size:13px}
+.topbar{display:flex;align-items:center;justify-content:space-between;background:#161b22;border-bottom:1px solid #30363d;padding:10px 18px}
+.brand{color:#58a6ff;font-weight:700;font-size:15px;letter-spacing:1px}
+.badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;border:1px solid}
+.badge.ready{color:#3fb950;border-color:#3fb950;background:rgba(63,185,80,.1)}
+.badge.running{color:#58a6ff;border-color:#58a6ff;background:rgba(88,166,255,.1)}
+.badge.stopped{color:#f85149;border-color:#f85149;background:rgba(248,81,73,.1)}
+.layout{display:grid;grid-template-columns:200px 1fr 200px;gap:12px;padding:12px;max-width:1300px;margin:0 auto}
+.panel{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;margin-bottom:10px}
+.ptitle{font-size:9px;color:#8b949e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-weight:700}
+.btn-row{display:flex;gap:6px;margin-bottom:8px}
+.btn{flex:1;padding:8px 6px;border-radius:6px;border:none;font-family:monospace;font-size:11px;font-weight:700;cursor:pointer;transition:opacity .15s}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn-go{background:#238636;color:#fff}
+.btn-go:hover:not(:disabled){background:#2ea043}
+.btn-stop{background:#da3633;color:#fff}
+.btn-stop:hover:not(:disabled){background:#f85149}
+.btn-rst{background:#21262d;color:#8b949e;border:1px solid #30363d;width:100%;margin-bottom:8px}
+.btn-rst:hover{color:#e6edf3}
+.sl-row{display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.sl-row label{color:#8b949e;font-size:10px;width:60px;flex-shrink:0}
+.sl-row input[type=range]{flex:1;accent-color:#58a6ff}
+.sl-row span{color:#58a6ff;font-size:10px;width:28px;text-align:right}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sb{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:8px}
+.sv{font-size:19px;font-weight:700;color:#58a6ff}
+.sl{font-size:9px;color:#8b949e;text-transform:uppercase;margin-top:2px}
+.krow{display:flex;gap:6px}
+.kpi{flex:1;border-radius:6px;padding:8px 4px;text-align:center;border:1px solid}
+.kpi.g{border-color:#238636;background:rgba(35,134,54,.08)}
+.kpi.r{border-color:#da3633;background:rgba(218,54,51,.08)}
+.kpi.b{border-color:#1f6feb;background:rgba(31,111,235,.08)}
+.kn{font-size:20px;font-weight:700}
+.kpi.g .kn{color:#3fb950}.kpi.r .kn{color:#f85149}.kpi.b .kn{color:#58a6ff}
+.kl{font-size:8px;color:#8b949e;text-transform:uppercase;margin-top:1px}
+.actbox{background:#0d1117;border:1px solid #e3b341;border-radius:6px;padding:10px;text-align:center;font-size:14px;font-weight:700;color:#e3b341;min-height:42px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.br{display:flex;align-items:center;gap:5px;margin-bottom:4px;font-size:9px}
+.br span:first-child{width:58px;color:#8b949e;flex-shrink:0}
+.bt{flex:1;background:#21262d;border-radius:2px;height:4px;overflow:hidden}
+.bf{height:100%;background:#58a6ff;border-radius:2px;transition:width .3s}
+.br span:last-child{color:#8b949e;width:26px;text-align:right}
+canvas{display:block;width:100%;border-radius:6px}
+#roadCanvas{background:#0d1117;margin-bottom:10px}
+#chartCanvas{background:#0d1117}
+.rmeta{display:flex;gap:14px;font-size:10px;color:#8b949e;margin-bottom:6px}
+.rmeta b{color:#58a6ff}
+.chdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.clbl{font-size:9px;color:#8b949e;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.leg{display:flex;gap:10px;font-size:9px}
+.l1{color:#58a6ff}.l2{color:#e3b341}
+.qrow{display:flex;align-items:center;gap:5px;margin-bottom:5px;font-size:9px}
+.qrow span:first-child{width:60px;color:#8b949e;flex-shrink:0}
+.qt{flex:1;background:#21262d;border-radius:2px;height:6px;overflow:hidden}
+.qf{height:100%;border-radius:2px;transition:width .3s}
+.qf.best{background:#58a6ff}.qf.rest{background:#21262d;border:1px solid #30363d}
+.qnum{color:#8b949e;width:32px;text-align:right}
+.srow{display:flex;align-items:center;gap:5px;margin-bottom:4px;font-size:9px}
+.srow span:first-child{width:38px;color:#8b949e;flex-shrink:0}
+.sbt{flex:1;background:#21262d;border-radius:2px;height:4px;overflow:hidden}
+.sbf{height:100%;border-radius:2px;transition:width .2s}
+.sg2{background:#3fb950}.sw2{background:#e3b341}.sd2{background:#f85149}
+.snum{color:#8b949e;width:26px;text-align:right}
+.logbox{background:#0d1117;border:1px solid #21262d;border-radius:6px;max-height:180px;overflow-y:auto;padding:6px}
+.logline{font-size:9px;padding:3px 0;border-bottom:1px solid #161b22;color:#8b949e}
+.logline:last-child{border-bottom:none}
+.logline.comp{color:#3fb950}.logline.col{color:#f85149}.logline.warn{color:#e3b341}.logline.info{color:#58a6ff}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.rightbar{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">◈ AUTONOMDRIVE — Self-Driving Car Simulation</span>
+  <span class="badge ready" id="badge">● READY</span>
+</div>
+
+<div class="layout">
+
+  <!-- LEFT SIDEBAR -->
+  <div>
+    <div class="panel">
+      <div class="ptitle">Simulation Control</div>
+      <div class="btn-row">
+        <button class="btn btn-go"   id="btnStart" onclick="startSim()">▶ Start</button>
+        <button class="btn btn-stop" id="btnStop"  onclick="stopSim()" disabled>■ Stop</button>
+      </div>
+      <button class="btn btn-rst" onclick="resetSim()">↺ Reset</button>
+      <div class="sl-row"><label>Episodes</label><input type="range" id="slEp" min="20" max="500" value="150" step="1" oninput="document.getElementById('vEp').textContent=this.value"><span id="vEp">150</span></div>
+      <div class="sl-row"><label>Speed</label>   <input type="range" id="slSp" min="2"  max="60"  value="20"  step="1" oninput="setSpeed(this.value)"><span id="vSp">20</span></div>
+      <div class="sl-row"><label>Obstacles</label><input type="range" id="slOb" min="0"  max="18"  value="7"   step="1" oninput="document.getElementById('vOb').textContent=this.value"><span id="vOb">7</span></div>
+      <div class="sl-row"><label>Lanes</label>   <input type="range" id="slLn" min="2"  max="4"   value="3"   step="1" oninput="document.getElementById('vLn').textContent=this.value"><span id="vLn">3</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">Agent Stats</div>
+      <div class="sg">
+        <div class="sb"><div class="sv" id="sEp">0</div><div class="sl">Episode</div></div>
+        <div class="sb"><div class="sv" id="sStep">0</div><div class="sl">Steps</div></div>
+        <div class="sb"><div class="sv" id="sEps">1.00</div><div class="sl">Epsilon</div></div>
+        <div class="sb"><div class="sv" id="sRew">0</div><div class="sl">Reward</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">Session Totals</div>
+      <div class="krow">
+        <div class="kpi g"><div class="kn" id="kComp">0</div><div class="kl">Done</div></div>
+        <div class="kpi r"><div class="kn" id="kColl">0</div><div class="kl">Crash</div></div>
+        <div class="kpi b"><div class="kn" id="kKm">0</div><div class="kl">km</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">Last Action</div>
+      <div class="actbox" id="actBox">—</div>
+      <div id="actBars"></div>
+    </div>
+  </div>
+
+  <!-- CENTRE -->
+  <div>
+    <div class="panel">
+      <div class="ptitle">Road View</div>
+      <div class="rmeta">
+        <span>Speed: <b id="mSpd">0</b> km/h</span>
+        <span>Lane: <b id="mLane">Centre</b></span>
+        <span>Progress: <b id="mProg">0%</b></span>
+      </div>
+      <canvas id="roadCanvas" width="640" height="200"></canvas>
+    </div>
+
+    <div class="panel">
+      <div class="chdr">
+        <div class="clbl">Reward per Episode</div>
+        <div class="leg"><span class="l1">● Reward</span><span class="l2">● 10-Avg</span></div>
+      </div>
+      <canvas id="chartCanvas" width="640" height="160"></canvas>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">Event Log</div>
+      <div class="logbox" id="logBox"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="rightbar">
+    <div class="panel">
+      <div class="ptitle">Q-Values</div>
+      <div id="qvDiv"></div>
+    </div>
+    <div class="panel">
+      <div class="ptitle">Sensor Array</div>
+      <div id="srDiv"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var LANES = 3, RLEN = 1000, DT = 1/30;
+var ACTS = ["Accelerate","Brake","Lane Left","Lane Right","Maintain"];
+var SANG = [-90,-45,0,45,90];
+var SLBL = ["L90","L45","Fwd","R45","R90"];
+
+var car = {lane:1, pos:0, speed:30, heading:0, tLane:1, lp:0};
+var obstacles = [];
+var sr = [0,0,0,0,0];
+var eps = 1.0, EMIN = 0.05, EDEC = 0.9993, G = 0.99, AL = 0.12;
+var NS = 243, NA = 5;
+var Qt = [];
+
+var running = false, iid = null;
+var epN = 0, totalEps = 150, stepN = 0, epRew = 0, epStep = 0;
+var comps = 0, colls = 0, kmDriven = 0;
+var rewHist = [], avgHist = [], actCounts = [0,0,0,0,0];
+var lastAct = 4;
+
+function initQ() {
+  Qt = [];
+  for (var i = 0; i < NS; i++) Qt.push([0,0,0,0,0]);
+}
+initQ();
+
+function si(r) {
+  var s = 0;
+  for (var i = 0; i < r.length; i++) {
+    var b = r[i] < 0.3 ? 0 : r[i] < 0.7 ? 1 : 2;
+    s += b * Math.pow(3, i);
+  }
+  return Math.floor(s) % NS;
+}
+
+function chooseAct(r) {
+  if (Math.random() < eps) return Math.floor(Math.random() * NA);
+  var q = Qt[si(r)], best = 0;
+  for (var i = 1; i < NA; i++) { if (q[i] > q[best]) best = i; }
+  return best;
+}
+
+function updateQ(r, a, rw, nr) {
+  var s = si(r), ns = si(nr);
+  var mx = Qt[ns][0];
+  for (var i = 1; i < NA; i++) { if (Qt[ns][i] > mx) mx = Qt[ns][i]; }
+  Qt[s][a] += AL * (rw + G * mx - Qt[s][a]);
+  eps = Math.max(EMIN, eps * EDEC);
+}
+
+function spawnObs() {
+  obstacles = [];
+  LANES = parseInt(document.getElementById("slLn").value);
+  var n = parseInt(document.getElementById("slOb").value);
+  for (var i = 0; i < n; i++) {
+    obstacles.push({
+      lane: Math.floor(Math.random() * LANES),
+      pos:  80 + Math.random() * 840,
+      speed: 12 + Math.random() * 32,
+      type: ["car","truck","cone","debris"][Math.floor(Math.random()*4)],
+      lt: 60 + Math.floor(Math.random()*120)
+    });
+  }
+}
+
+function readSensors() {
+  var out = [];
+  for (var i = 0; i < SANG.length; i++) {
+    var rad = (car.heading + SANG[i]) * Math.PI / 180;
+    var dx = Math.cos(rad), dy = Math.sin(rad);
+    var best = 150;
+    for (var j = 0; j < obstacles.length; j++) {
+      var o = obstacles[j];
+      var rp = o.pos - car.pos, rl = (o.lane - car.lane) * 10;
+      var t = rp*dx + rl*dy;
+      if (t <= 0) continue;
+      if (Math.abs(rp*(-dy) + rl*dx) > 6) continue;
+      if (t < best) best = t;
+    }
+    out.push(1 - best/150);
+  }
+  return out;
+}
+
+function applyAction(a) {
+  if (a === 0) car.speed = Math.min(120, car.speed + 5);
+  else if (a === 1) car.speed = Math.max(0, car.speed - 7);
+  else if (a === 2 && car.lane > 0 && car.lp === 0) { car.tLane = car.lane-1; car.lp = 3; }
+  else if (a === 3 && car.lane < LANES-1 && car.lp === 0) { car.tLane = car.lane+1; car.lp = 3; }
+  if (car.lp > 0) {
+    car.lp--;
+    car.heading = (car.tLane - car.lane) * 5;
+    if (car.lp === 0) { car.lane = car.tLane; car.heading = 0; }
+  } else { car.heading *= 0.6; }
+  car.pos += car.speed * DT;
+}
+
+function calcReward() {
+  var r = 0.1;
+  if (car.speed >= 30 && car.speed <= 80) r += 0.4;
+  if (car.speed < 5) r -= 0.2;
+  if (car.lane === Math.floor(LANES/2)) r += 0.05;
+  for (var i = 0; i < obstacles.length; i++) {
+    var o = obstacles[i];
+    var g = Math.abs(car.pos - o.pos);
+    if (car.lane === o.lane) {
+      if (g < 5) return {r:-15, done:true, ev:"collision"};
+      if (g < 20) r -= 0.4;
+    }
+  }
+  if (car.lane < 0 || car.lane >= LANES) return {r:-8, done:true, ev:"off-road"};
+  if (car.pos >= RLEN) return {r:25, done:true, ev:"complete"};
+  return {r:r, done:false, ev:null};
+}
+
+function stepObs() {
+  for (var i = 0; i < obstacles.length; i++) {
+    var o = obstacles[i];
+    o.pos += o.speed * DT;
+    if (o.pos > RLEN) o.pos = Math.random() * 60;
+    o.lt--;
+    if (o.lt <= 0 && o.type === "car") {
+      var d = Math.floor(Math.random()*3)-1;
+      var nl = o.lane + d;
+      if (nl >= 0 && nl < LANES) o.lane = nl;
+      o.lt = 60 + Math.floor(Math.random()*120);
+    }
+  }
+}
+
+function resetEp() {
+  LANES = parseInt(document.getElementById("slLn").value);
+  car = {lane:Math.floor(LANES/2), pos:0, speed:20+Math.random()*15, heading:0, tLane:Math.floor(LANES/2), lp:0};
+  spawnObs();
+  epRew = 0; epStep = 0;
+}
+
+function tick() {
+  if (!running) return;
+  var prev = sr.slice();
+  sr = readSensors();
+  var a = chooseAct(sr);
+  lastAct = a; actCounts[a]++;
+  applyAction(a);
+  stepObs();
+  var next = readSensors();
+  var res = calcReward();
+  updateQ(prev, a, res.r, next);
+  epRew += res.r; epStep++; stepN++;
+  kmDriven += car.speed * DT / 1000;
+
+  if (res.done || epStep >= 600) {
+    epN++;
+    rewHist.push(Math.round(epRew*10)/10);
+    var w = rewHist.slice(-10), avg = 0;
+    for (var i = 0; i < w.length; i++) avg += w[i];
+    avgHist.push(Math.round(avg/w.length*10)/10);
+
+    if (res.ev === "complete") { comps++; log("Ep "+epN+": Route complete! Reward "+Math.round(epRew*10)/10, "comp"); }
+    else if (res.ev === "collision") { colls++; log("Ep "+epN+": Collision @ pos "+Math.round(car.pos), "col"); }
+    else { log("Ep "+epN+": Timeout ("+epStep+" steps) Reward "+Math.round(epRew*10)/10, "warn"); }
+
+    resetEp();
+    if (epN >= totalEps) { stopSim(); log("Training complete — "+epN+" episodes finished!", "comp"); return; }
+  }
+
+  drawRoad();
+  if (epN % 2 === 0 || rewHist.length < 5) drawChart();
+  updateUI();
+}
+
+function drawRoad() {
+  var cv = document.getElementById("roadCanvas");
+  var ctx = cv.getContext("2d");
+  var W = cv.width, H = cv.height;
+  var LH = Math.floor((H - 30) / LANES);
+  var rt = 14, rh = LANES * LH;
+
+  ctx.fillStyle = "#0d1117"; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = "#161b22"; ctx.fillRect(12, rt, W-24, rh);
+
+  ctx.setLineDash([14,10]); ctx.strokeStyle = "#21262d"; ctx.lineWidth = 1;
+  for (var i = 1; i < LANES; i++) {
+    ctx.beginPath(); ctx.moveTo(12, rt+i*LH); ctx.lineTo(W-12, rt+i*LH); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+  ctx.strokeStyle = "#30363d"; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(12,rt);    ctx.lineTo(W-12,rt);    ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(12,rt+rh); ctx.lineTo(W-12,rt+rh); ctx.stroke();
+
+  var pg = car.pos / RLEN;
+  ctx.fillStyle = "#21262d"; ctx.fillRect(12, rt-8, W-24, 4);
+  ctx.fillStyle = "#58a6ff"; ctx.fillRect(12, rt-8, (W-24)*pg, 4);
+
+  var oc = {car:"#1f6feb", truck:"#e3b341", cone:"#f85149", debris:"#6e7681"};
+  for (var i = 0; i < obstacles.length; i++) {
+    var o = obstacles[i];
+    var ox = 12 + (o.pos/RLEN)*(W-24);
+    var oy = rt + o.lane*LH + LH/2;
+    if (ox < 12 || ox > W-12) continue;
+    ctx.fillStyle = oc[o.type] || "#6e7681";
+    if (o.type === "truck")    { ctx.fillRect(ox-16, oy-7, 32, 14); }
+    else if (o.type === "cone") { ctx.beginPath(); ctx.moveTo(ox,oy-10); ctx.lineTo(ox+7,oy+7); ctx.lineTo(ox-7,oy+7); ctx.closePath(); ctx.fill(); }
+    else                        { ctx.fillRect(ox-11, oy-6, 22, 12); }
+  }
+
+  var cx = Math.max(40, Math.min(W-40, 12+(car.pos/RLEN)*(W-24)));
+  var cy = rt + car.lane*LH + LH/2;
+  ctx.save(); ctx.translate(cx,cy); ctx.rotate(car.heading*Math.PI/180);
+  ctx.fillStyle = "#58a6ff"; ctx.fillRect(-15,-8,30,16);
+  ctx.fillStyle = "#0d1117"; ctx.fillRect(-5,-6,18,12);
+  ctx.fillStyle = "#ffffff";
+  ctx.beginPath(); ctx.arc(13,-5,2,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(13, 5,2,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  var rc = ["rgba(248,81,73,.5)","rgba(227,179,65,.5)","rgba(88,166,255,.4)","rgba(227,179,65,.5)","rgba(248,81,73,.5)"];
+  for (var i = 0; i < sr.length; i++) {
+    if (sr[i] < 0.05) continue;
+    var rad = (car.heading + SANG[i]) * Math.PI / 180;
+    var len = sr[i] * 65;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(rad)*len, cy+Math.sin(rad)*len*0.32);
+    ctx.strokeStyle = rc[i]; ctx.lineWidth = 1; ctx.stroke();
+  }
+
+  ctx.fillStyle = "#8b949e"; ctx.font = "10px monospace";
+  var ln = ["Left","Centre","Right","Right-2"];
+  ctx.fillText("Lane: "+(ln[car.lane]||car.lane)+"   Speed: "+Math.round(car.speed)+" km/h   Progress: "+Math.round(car.pos/RLEN*100)+"%", 14, rt+rh+14);
+}
+
+function drawChart() {
+  var cv = document.getElementById("chartCanvas");
+  var ctx = cv.getContext("2d");
+  var W = cv.width, H = cv.height;
+  var d = rewHist, av = avgHist;
+  ctx.fillStyle = "#0d1117"; ctx.fillRect(0,0,W,H);
+  if (d.length < 2) {
+    ctx.fillStyle = "#30363d"; ctx.font = "12px monospace";
+    ctx.fillText("Chart appears after episode 2...", 20, H/2);
+    return;
+  }
+  var pad = {t:10,b:24,l:40,r:10};
+  var iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  var n = Math.min(d.length, 100);
+  var sl = d.slice(-n), al = av.slice(-n);
+  var all = sl.concat(al), mn = all[0], mx = all[0];
+  for (var i=1;i<all.length;i++){if(all[i]<mn)mn=all[i];if(all[i]>mx)mx=all[i];}
+  var rng = mx-mn || 1;
+  function xs(i){return pad.l+(i/(sl.length-1))*iw;}
+  function ys(v){return pad.t+(1-(v-mn)/rng)*ih;}
+
+  ctx.strokeStyle="#21262d"; ctx.lineWidth=0.8;
+  for(var t=0;t<=4;t++){
+    var y=pad.t+(t/4)*ih;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    ctx.fillStyle="#6e7681";ctx.font="9px monospace";
+    ctx.fillText(Math.round((mx-(t/4)*rng)*10)/10, 2, y+3);
+  }
+
+  ctx.beginPath();
+  for(var i=0;i<sl.length;i++){if(i===0)ctx.moveTo(xs(0),ys(sl[0]));else ctx.lineTo(xs(i),ys(sl[i]));}
+  ctx.strokeStyle="#58a6ff"; ctx.lineWidth=1.5; ctx.stroke();
+
+  ctx.beginPath();
+  for(var i=0;i<al.length;i++){if(i===0)ctx.moveTo(xs(0),ys(al[0]));else ctx.lineTo(xs(i),ys(al[i]));}
+  ctx.strokeStyle="#e3b341"; ctx.lineWidth=2; ctx.stroke();
+
+  ctx.fillStyle="#6e7681"; ctx.font="9px monospace";
+  ctx.fillText("Ep"+(epN-sl.length+1), pad.l, H-4);
+  ctx.fillText("Ep"+epN, W-pad.r-28, H-4);
+}
+
+function updateUI() {
+  document.getElementById("sEp").textContent   = epN;
+  document.getElementById("sStep").textContent  = stepN;
+  document.getElementById("sEps").textContent   = eps.toFixed(2);
+  document.getElementById("sRew").textContent   = Math.round(epRew*10)/10;
+  document.getElementById("kComp").textContent  = comps;
+  document.getElementById("kColl").textContent  = colls;
+  document.getElementById("kKm").textContent    = Math.round(kmDriven*10)/10;
+  document.getElementById("mSpd").textContent   = Math.round(car.speed*10)/10;
+  var ln = ["Left","Centre","Right","Right-2"];
+  document.getElementById("mLane").textContent  = ln[car.lane]||car.lane;
+  document.getElementById("mProg").textContent  = Math.round(car.pos/RLEN*100)+"%";
+  document.getElementById("actBox").textContent = ACTS[lastAct];
+
+  var tot = 0; for(var i=0;i<actCounts.length;i++) tot+=actCounts[i]; if(!tot) tot=1;
+  var bars = "";
+  for(var i=0;i<ACTS.length;i++){
+    var p = Math.round(actCounts[i]/tot*100);
+    bars += '<div class="br"><span>'+ACTS[i]+'</span><div class="bt"><div class="bf" style="width:'+p+'%"></div></div><span>'+p+'%</span></div>';
+  }
+  document.getElementById("actBars").innerHTML = bars;
+
+  var idx = si(sr), q = Qt[idx];
+  var mq = q[0]; for(var i=1;i<NA;i++){if(q[i]>mq)mq=q[i];}
+  var qhtml = "";
+  for(var i=0;i<ACTS.length;i++){
+    var norm = mq ? Math.max(0, (q[i]/Math.abs(mq))*100) : 0;
+    qhtml += '<div class="qrow"><span>'+ACTS[i]+'</span><div class="qt"><div class="qf '+(q[i]===mq?"best":"rest")+'" style="width:'+Math.round(norm)+'%"></div></div><span class="qnum">'+Math.round(q[i]*100)/100+'</span></div>';
+  }
+  document.getElementById("qvDiv").innerHTML = qhtml;
+
+  var shtml = "";
+  for(var i=0;i<sr.length;i++){
+    var p = Math.round(sr[i]*100);
+    var c = sr[i]<0.3?"sg2":sr[i]<0.7?"sw2":"sd2";
+    shtml += '<div class="srow"><span>'+SLBL[i]+'</span><div class="sbt"><div class="sbf '+c+'" style="width:'+p+'%"></div></div><span class="snum">'+p+'%</span></div>';
+  }
+  document.getElementById("srDiv").innerHTML = shtml;
+}
+
+function log(msg, type) {
+  var b = document.getElementById("logBox");
+  var d = document.createElement("div");
+  d.className = "logline " + (type||"");
+  d.textContent = "["+new Date().toLocaleTimeString()+"] "+msg;
+  b.insertBefore(d, b.firstChild);
+  while(b.children.length > 40) b.removeChild(b.lastChild);
+}
+
+function setBadge(cls, txt) {
+  var el = document.getElementById("badge");
+  el.className = "badge "+cls; el.textContent = txt;
+}
+
+function startSim() {
+  if (running) return;
+  totalEps = parseInt(document.getElementById("slEp").value);
+  epN=0; stepN=0; comps=0; colls=0; kmDriven=0;
+  rewHist=[]; avgHist=[]; actCounts=[0,0,0,0,0];
+  eps=1.0; initQ();
+  document.getElementById("logBox").innerHTML = "";
+  resetEp();
+  running = true;
+  var sp = parseInt(document.getElementById("slSp").value);
+  iid = setInterval(tick, Math.max(16, Math.floor(1000/sp)));
+  document.getElementById("btnStart").disabled = true;
+  document.getElementById("btnStop").disabled  = false;
+  setBadge("running","● RUNNING");
+  log("Started — "+totalEps+" eps, "+document.getElementById("slOb").value+" obstacles, "+document.getElementById("slLn").value+" lanes","info");
+}
+
+function stopSim() {
+  running = false; clearInterval(iid);
+  document.getElementById("btnStart").disabled = false;
+  document.getElementById("btnStop").disabled  = true;
+  setBadge("stopped","■ STOPPED");
+  log("Stopped at episode "+epN,"warn");
+  drawChart();
+}
+
+function resetSim() {
+  stopSim();
+  epN=0; stepN=0; comps=0; colls=0; kmDriven=0;
+  rewHist=[]; avgHist=[]; actCounts=[0,0,0,0,0]; lastAct=4;
+  eps=1.0; initQ();
+  car={lane:1,pos:0,speed:30,heading:0,tLane:1,lp:0};
+  obstacles=[]; sr=[0,0,0,0,0];
+  document.getElementById("logBox").innerHTML="";
+  document.getElementById("sEp").textContent="0";
+  document.getElementById("sStep").textContent="0";
+  document.getElementById("sEps").textContent="1.00";
+  document.getElementById("sRew").textContent="0";
+  document.getElementById("kComp").textContent="0";
+  document.getElementById("kColl").textContent="0";
+  document.getElementById("kKm").textContent="0";
+  document.getElementById("actBox").textContent="—";
+  document.getElementById("actBars").innerHTML="";
+  document.getElementById("qvDiv").innerHTML="";
+  document.getElementById("srDiv").innerHTML="";
+  setBadge("ready","● READY");
+  drawRoad(); drawChart();
+  log("Reset — ready to start","info");
+}
+
+function setSpeed(v) {
+  document.getElementById("vSp").textContent = v;
+  if (running) { clearInterval(iid); iid = setInterval(tick, Math.max(16, Math.floor(1000/parseInt(v)))); }
+}
+
+spawnObs();
+drawRoad();
+drawChart();
+log("Dashboard ready — press Start","info");
+</script>
+</body>
+</html>
