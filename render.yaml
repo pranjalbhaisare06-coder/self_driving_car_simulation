@@ -1,6 +1,7 @@
 services:
   - type: web
-    name: self-driving-api
+    name: self-driving-car-simulation
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python backend/app.py
+    startCommand: gunicorn backend.app:app
+    autoDeploy: true

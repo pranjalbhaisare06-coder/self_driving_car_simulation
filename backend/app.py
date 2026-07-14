@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from environment.car import Car
 from environment.road import Road
+from backend.inference import predict, reset, get_state
 
 app = Flask(__name__)
 CORS(app)
@@ -104,9 +105,10 @@ def reward():
     return jsonify({
         "reward": simulation["reward"]
     })
-
+    
 # -----------------------------
 # Run Server
 # -----------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

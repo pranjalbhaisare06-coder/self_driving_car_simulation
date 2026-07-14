@@ -1,0 +1,808 @@
+{
+  "episodes": [
+    {
+      "episode": 1,
+      "steps": 190,
+      "total_reward": 27.8,
+      "epsilon": 0.9385,
+      "collision": false,
+      "distance": 37.0
+    },
+    {
+      "episode": 2,
+      "steps": 499,
+      "total_reward": 101.4,
+      "epsilon": 0.7312,
+      "collision": false,
+      "distance": 831.1
+    },
+    {
+      "episode": 3,
+      "steps": 120,
+      "total_reward": 27.9,
+      "epsilon": 0.6886,
+      "collision": false,
+      "distance": 234.8
+    },
+    {
+      "episode": 4,
+      "steps": 159,
+      "total_reward": 20.7,
+      "epsilon": 0.636,
+      "collision": false,
+      "distance": 421.0
+    },
+    {
+      "episode": 5,
+      "steps": 137,
+      "total_reward": 30.4,
+      "epsilon": 0.5938,
+      "collision": false,
+      "distance": 293.7
+    },
+    {
+      "episode": 6,
+      "steps": 135,
+      "total_reward": 11.0,
+      "epsilon": 0.5551,
+      "collision": false,
+      "distance": 260.9
+    },
+    {
+      "episode": 7,
+      "steps": 152,
+      "total_reward": 10.0,
+      "epsilon": 0.5144,
+      "collision": false,
+      "distance": 381.3
+    },
+    {
+      "episode": 8,
+      "steps": 136,
+      "total_reward": 15.5,
+      "epsilon": 0.4806,
+      "collision": false,
+      "distance": 358.9
+    },
+    {
+      "episode": 9,
+      "steps": 58,
+      "total_reward": 1.5,
+      "epsilon": 0.4669,
+      "collision": false,
+      "distance": 135.7
+    },
+    {
+      "episode": 10,
+      "steps": 122,
+      "total_reward": 29.6,
+      "epsilon": 0.4392,
+      "collision": false,
+      "distance": 296.5
+    },
+    {
+      "episode": 11,
+      "steps": 58,
+      "total_reward": 5.9,
+      "epsilon": 0.4267,
+      "collision": false,
+      "distance": 124.0
+    },
+    {
+      "episode": 12,
+      "steps": 153,
+      "total_reward": 47.8,
+      "epsilon": 0.3953,
+      "collision": false,
+      "distance": 342.0
+    },
+    {
+      "episode": 13,
+      "steps": 264,
+      "total_reward": 118.4,
+      "epsilon": 0.3464,
+      "collision": false,
+      "distance": 530.8
+    },
+    {
+      "episode": 14,
+      "steps": 419,
+      "total_reward": 194.2,
+      "epsilon": 0.2809,
+      "collision": false,
+      "distance": 761.1
+    },
+    {
+      "episode": 15,
+      "steps": 130,
+      "total_reward": 51.2,
+      "epsilon": 0.2632,
+      "collision": false,
+      "distance": 220.9
+    },
+    {
+      "episode": 16,
+      "steps": 500,
+      "total_reward": 247.9,
+      "epsilon": 0.205,
+      "collision": false,
+      "distance": 833.6
+    },
+    {
+      "episode": 17,
+      "steps": 111,
+      "total_reward": 43.2,
+      "epsilon": 0.1939,
+      "collision": false,
+      "distance": 166.2
+    },
+    {
+      "episode": 18,
+      "steps": 173,
+      "total_reward": 73.6,
+      "epsilon": 0.1778,
+      "collision": false,
+      "distance": 260.3
+    },
+    {
+      "episode": 19,
+      "steps": 88,
+      "total_reward": 32.0,
+      "epsilon": 0.1702,
+      "collision": false,
+      "distance": 149.3
+    },
+    {
+      "episode": 20,
+      "steps": 500,
+      "total_reward": 247.3,
+      "epsilon": 0.1325,
+      "collision": false,
+      "distance": 804.7
+    },
+    {
+      "episode": 21,
+      "steps": 204,
+      "total_reward": 89.7,
+      "epsilon": 0.1197,
+      "collision": false,
+      "distance": 333.4
+    },
+    {
+      "episode": 22,
+      "steps": 139,
+      "total_reward": 57.5,
+      "epsilon": 0.1116,
+      "collision": false,
+      "distance": 227.3
+    },
+    {
+      "episode": 23,
+      "steps": 116,
+      "total_reward": 46.0,
+      "epsilon": 0.1053,
+      "collision": false,
+      "distance": 191.3
+    },
+    {
+      "episode": 24,
+      "steps": 500,
+      "total_reward": 246.1,
+      "epsilon": 0.082,
+      "collision": false,
+      "distance": 785.8
+    },
+    {
+      "episode": 25,
+      "steps": 500,
+      "total_reward": 242.2,
+      "epsilon": 0.0639,
+      "collision": false,
+      "distance": 723.5
+    },
+    {
+      "episode": 26,
+      "steps": 500,
+      "total_reward": 231.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 757.7
+    },
+    {
+      "episode": 27,
+      "steps": 248,
+      "total_reward": 111.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 485.1
+    },
+    {
+      "episode": 28,
+      "steps": 500,
+      "total_reward": 237.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 776.5
+    },
+    {
+      "episode": 29,
+      "steps": 143,
+      "total_reward": 56.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 252.7
+    },
+    {
+      "episode": 30,
+      "steps": 359,
+      "total_reward": 139.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 467.0
+    },
+    {
+      "episode": 31,
+      "steps": 263,
+      "total_reward": 118.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 521.1
+    },
+    {
+      "episode": 32,
+      "steps": 100,
+      "total_reward": 38.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 189.0
+    },
+    {
+      "episode": 33,
+      "steps": 110,
+      "total_reward": 41.8,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 190.7
+    },
+    {
+      "episode": 34,
+      "steps": 266,
+      "total_reward": 116.8,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 437.1
+    },
+    {
+      "episode": 35,
+      "steps": 303,
+      "total_reward": 133.2,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 500.7
+    },
+    {
+      "episode": 36,
+      "steps": 202,
+      "total_reward": 88.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 432.7
+    },
+    {
+      "episode": 37,
+      "steps": 500,
+      "total_reward": 242.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 885.1
+    },
+    {
+      "episode": 38,
+      "steps": 340,
+      "total_reward": 147.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 661.4
+    },
+    {
+      "episode": 39,
+      "steps": 81,
+      "total_reward": 28.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 180.6
+    },
+    {
+      "episode": 40,
+      "steps": 276,
+      "total_reward": 107.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 583.6
+    },
+    {
+      "episode": 41,
+      "steps": 401,
+      "total_reward": 168.4,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 553.5
+    },
+    {
+      "episode": 42,
+      "steps": 500,
+      "total_reward": 235.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 723.9
+    },
+    {
+      "episode": 43,
+      "steps": 500,
+      "total_reward": 198.4,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 590.7
+    },
+    {
+      "episode": 44,
+      "steps": 213,
+      "total_reward": 83.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 274.0
+    },
+    {
+      "episode": 45,
+      "steps": 500,
+      "total_reward": 235.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 673.5
+    },
+    {
+      "episode": 46,
+      "steps": 149,
+      "total_reward": 62.2,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 291.9
+    },
+    {
+      "episode": 47,
+      "steps": 493,
+      "total_reward": 161.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 573.4
+    },
+    {
+      "episode": 48,
+      "steps": 202,
+      "total_reward": 87.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 330.0
+    },
+    {
+      "episode": 49,
+      "steps": 437,
+      "total_reward": 204.4,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 744.9
+    },
+    {
+      "episode": 50,
+      "steps": 500,
+      "total_reward": 241.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 954.6
+    },
+    {
+      "episode": 51,
+      "steps": 182,
+      "total_reward": 78.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 347.2
+    },
+    {
+      "episode": 52,
+      "steps": 211,
+      "total_reward": 84.2,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 364.4
+    },
+    {
+      "episode": 53,
+      "steps": 222,
+      "total_reward": 97.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 378.0
+    },
+    {
+      "episode": 54,
+      "steps": 293,
+      "total_reward": 132.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 535.8
+    },
+    {
+      "episode": 55,
+      "steps": 291,
+      "total_reward": 133.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 517.3
+    },
+    {
+      "episode": 56,
+      "steps": 185,
+      "total_reward": 79.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 384.9
+    },
+    {
+      "episode": 57,
+      "steps": 165,
+      "total_reward": 69.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 346.6
+    },
+    {
+      "episode": 58,
+      "steps": 196,
+      "total_reward": 85.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 419.7
+    },
+    {
+      "episode": 59,
+      "steps": 247,
+      "total_reward": 111.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 543.8
+    },
+    {
+      "episode": 60,
+      "steps": 467,
+      "total_reward": 219.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 937.3
+    },
+    {
+      "episode": 61,
+      "steps": 333,
+      "total_reward": 152.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 716.6
+    },
+    {
+      "episode": 62,
+      "steps": 499,
+      "total_reward": 266.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 1000.4
+    },
+    {
+      "episode": 63,
+      "steps": 256,
+      "total_reward": 115.4,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 493.5
+    },
+    {
+      "episode": 64,
+      "steps": 322,
+      "total_reward": 148.4,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 531.7
+    },
+    {
+      "episode": 65,
+      "steps": 500,
+      "total_reward": 247.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 762.9
+    },
+    {
+      "episode": 66,
+      "steps": 465,
+      "total_reward": 218.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 674.7
+    },
+    {
+      "episode": 67,
+      "steps": 500,
+      "total_reward": 233.9,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 963.4
+    },
+    {
+      "episode": 68,
+      "steps": 498,
+      "total_reward": 264.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 1002.3
+    },
+    {
+      "episode": 69,
+      "steps": 345,
+      "total_reward": 158.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 773.9
+    },
+    {
+      "episode": 70,
+      "steps": 184,
+      "total_reward": 78.8,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 361.9
+    },
+    {
+      "episode": 71,
+      "steps": 500,
+      "total_reward": 246.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 761.0
+    },
+    {
+      "episode": 72,
+      "steps": 500,
+      "total_reward": 245.8,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 758.7
+    },
+    {
+      "episode": 73,
+      "steps": 444,
+      "total_reward": 206.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 721.5
+    },
+    {
+      "episode": 74,
+      "steps": 186,
+      "total_reward": 73.8,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 222.7
+    },
+    {
+      "episode": 75,
+      "steps": 500,
+      "total_reward": 232.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 730.4
+    },
+    {
+      "episode": 76,
+      "steps": 96,
+      "total_reward": 35.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 149.9
+    },
+    {
+      "episode": 77,
+      "steps": 478,
+      "total_reward": 255.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 1001.7
+    },
+    {
+      "episode": 78,
+      "steps": 447,
+      "total_reward": 208.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 871.6
+    },
+    {
+      "episode": 79,
+      "steps": 500,
+      "total_reward": 244.6,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 974.0
+    },
+    {
+      "episode": 80,
+      "steps": 261,
+      "total_reward": 116.4,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 538.5
+    },
+    {
+      "episode": 81,
+      "steps": 153,
+      "total_reward": 64.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 320.5
+    },
+    {
+      "episode": 82,
+      "steps": 292,
+      "total_reward": 125.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 573.0
+    },
+    {
+      "episode": 83,
+      "steps": 107,
+      "total_reward": 41.2,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 198.1
+    },
+    {
+      "episode": 84,
+      "steps": 268,
+      "total_reward": 116.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 521.0
+    },
+    {
+      "episode": 85,
+      "steps": 492,
+      "total_reward": 253.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 1001.4
+    },
+    {
+      "episode": 86,
+      "steps": 71,
+      "total_reward": 22.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 136.1
+    },
+    {
+      "episode": 87,
+      "steps": 165,
+      "total_reward": 69.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 362.7
+    },
+    {
+      "episode": 88,
+      "steps": 202,
+      "total_reward": 88.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 378.7
+    },
+    {
+      "episode": 89,
+      "steps": 345,
+      "total_reward": 152.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 736.8
+    },
+    {
+      "episode": 90,
+      "steps": 195,
+      "total_reward": 85.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 339.6
+    },
+    {
+      "episode": 91,
+      "steps": 136,
+      "total_reward": 55.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 241.6
+    },
+    {
+      "episode": 92,
+      "steps": 500,
+      "total_reward": 238.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 684.9
+    },
+    {
+      "episode": 93,
+      "steps": 491,
+      "total_reward": 224.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 910.8
+    },
+    {
+      "episode": 94,
+      "steps": 226,
+      "total_reward": 97.7,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 448.7
+    },
+    {
+      "episode": 95,
+      "steps": 495,
+      "total_reward": 255.9,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 1000.4
+    },
+    {
+      "episode": 96,
+      "steps": 132,
+      "total_reward": 52.2,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 259.6
+    },
+    {
+      "episode": 97,
+      "steps": 352,
+      "total_reward": 163.1,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 536.6
+    },
+    {
+      "episode": 98,
+      "steps": 500,
+      "total_reward": 245.5,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 790.4
+    },
+    {
+      "episode": 99,
+      "steps": 146,
+      "total_reward": 61.0,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 197.3
+    },
+    {
+      "episode": 100,
+      "steps": 243,
+      "total_reward": 108.3,
+      "epsilon": 0.05,
+      "collision": false,
+      "distance": 306.0
+    }
+  ],
+  "config": {
+    "lanes": 3,
+    "obstacles": 10
+  }
+}
